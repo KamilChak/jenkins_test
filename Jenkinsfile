@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Setup Python') {
+            steps {
+                sh 'python3 -m venv venv'
+                sh '. venv/bin/activate'
+            }
+        }
 
         stage('Install Dependencies') {
             steps {
@@ -30,6 +36,10 @@ pipeline {
     }
 
     post {
+        always {
+            echo 'Cleaning up workspace...'
+            deleteDir()
+        }
         success {
             echo 'Pipeline succeeded!'
         }
