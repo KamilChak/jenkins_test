@@ -2,35 +2,49 @@ pipeline {
     agent any
 
     stages {
-
-        stage('Install Dependencies') {
+        stage('Setup Python Environment') {
             steps {
-                sh 'pip install --user -r requirements.txt'
+                // Ensure Python and virtualenv are installed
+                sh 'python -m venv venv'
+                sh 'source venv/bin/activate'
+                sh 'pip install --upgrade pip'
+                sh 'pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh '. venv/bin/activate && python manage.py test'
+                // Run tests in the venv
+                sh '''
+                source venv/bin/activate
+                python manage.py test
+                '''
             }
         }
 
-        stage('Build') {
+        stage('Build Static Files') {
             steps {
-                sh '. venv/bin/activate && python manage.py collectstatic --noinput'
+                // Collect static files in the venv
+                sh '''
+                source venv/bin/activate
+                python manage.py collectstatic --noinput
+                '''
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'echo "Deploying the project..."'
-                //deployment scripts or commands here
+                echo 'Deploying the project...'
+                // Add your deployment scripts or commands here
             }
         }
     }
 
     post {
-        
+        always {
+            echo 'Cleaning up workspace...'
+            deleteDir()
+        }
         success {
             echo 'Pipeline succeeded!'
         }
