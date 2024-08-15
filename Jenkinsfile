@@ -7,7 +7,7 @@ pipeline {
                 // Ensure Python and virtualenv are installed
                 sh ''' 
                 chmod +x envsetup.sh
-                ./ensetup.sh
+                ./envsetup.sh
                 '''
             }
         }
