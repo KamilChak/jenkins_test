@@ -1,22 +1,20 @@
-if [-d "env"]
-then
-    echo "Python venv exists"
-else
+#!/bin/bash
+
+if [ ! -d "env" ]; then
+    echo "Creating Python virtual environment..."
     python3 -m venv env
 fi
 
-echo $PWD
 source env/bin/activate
 
-pip3 install -r requirements.txt
+pip install --no-cache-dir -r requirements.txt
 
-if [-d "logs"]
-then
-    echo "log folder exists"
-else
+if [ ! -d "logs" ]; then
+    echo "Creating logs directory..."
     mkdir logs
     touch logs/error.log logs/access.log
 fi
 
-sudo chmod -R 777 logs
-echo "envsetup finished"
+chmod -R 777 logs
+
+echo "Environment setup finished."

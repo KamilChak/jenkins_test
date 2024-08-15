@@ -4,8 +4,7 @@ pipeline {
     stages {
         stage('Setup Python Environment') {
             steps {
-                // Ensure Python and virtualenv are installed
-                sh ''' 
+                sh '''
                 chmod +x envsetup.sh
                 ./envsetup.sh
                 '''
@@ -14,28 +13,10 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                // Run tests in the venv
                 sh '''
-                source venv/bin/activate
-                python manage.py test
+                source env/bin/activate
+                python3 manage.py test
                 '''
-            }
-        }
-
-        stage('Build Static Files') {
-            steps {
-                // Collect static files in the venv
-                sh '''
-                source venv/bin/activate
-                python manage.py collectstatic --noinput
-                '''
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying the project...'
-                // Add your deployment scripts or commands here
             }
         }
     }
