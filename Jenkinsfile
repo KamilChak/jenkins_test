@@ -5,10 +5,10 @@ pipeline {
         stage('Setup Python Environment') {
             steps {
                 // Ensure Python and virtualenv are installed
-                sh 'python -m venv venv'
-                sh 'source venv/bin/activate'
-                sh 'pip install --upgrade pip'
-                sh 'pip install -r requirements.txt'
+                sh ''' 
+                chmod +x envsetup.sh
+                ./ensetup.sh
+                '''
             }
         }
 
