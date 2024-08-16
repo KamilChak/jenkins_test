@@ -19,6 +19,24 @@ pipeline {
                 '''
             }
         }
+
+        stage('Gunicorn setup'){
+            steps{
+                sh '''
+                chmod +x gunicorn.sh
+                ./gunicorn.sh
+                '''
+            }
+        }
+
+        stage('Nginx setup'){
+            steps{
+                sh '''
+                chmod +x nginx.sh
+                ./nginx.sh
+                '''
+            }
+        }
     }
 
     post {
