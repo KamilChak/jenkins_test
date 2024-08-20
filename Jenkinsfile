@@ -19,7 +19,7 @@ pipeline {
                 '''
             }
         }
-
+/*
         stage('Gunicorn setup'){
             steps{
                 sh '''
@@ -37,7 +37,7 @@ pipeline {
                 '''
             }
         }
-    }
+    }*/
 
     post {
         always {
