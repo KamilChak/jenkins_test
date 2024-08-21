@@ -2,21 +2,28 @@ pipeline {
     agent any
 
     stages {
-        stage('Setup Python Environment') {
+
+        stage('Build Docker Image') {
             steps {
-                sh '''
-                chmod +x envsetup.sh
-                ./envsetup.sh
-                '''
+                script {
+                    sh 'docker build -t jenkinsTest .'
+                }
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh '''
-                . env/bin/activate
-                python3 manage.py test
-                '''
+                script {
+                    sh 'docker run --rm jenkinsTest python3 manage.py test'
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    sh 'docker run -d -p 8000:8000 jenkinsTest'
+                }
             }
         }
 /*

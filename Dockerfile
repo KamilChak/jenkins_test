@@ -7,6 +7,12 @@ ENV PYTHONUNBUFFERED 1
 # Set the working directory in the container
 WORKDIR /app
 
+# Ensure the script is executable
+RUN chmod +x envsetup.sh
+
+# Run environment setup script
+RUN ./envsetup.sh
+
 # Copy the requirements file into the container
 COPY requirements.txt /app/
 
