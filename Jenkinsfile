@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Build Docker Image') {
             steps {
                 script {
@@ -26,9 +25,10 @@ pipeline {
                 }
             }
         }
-/*
-        stage('Gunicorn setup'){
-            steps{
+
+        /*
+        stage('Gunicorn setup') {
+            steps {
                 sh '''
                 chmod +x gunicorn.sh
                 ./gunicorn.sh
@@ -36,15 +36,16 @@ pipeline {
             }
         }
 
-        stage('Nginx setup'){
-            steps{
+        stage('Nginx setup') {
+            steps {
                 sh '''
                 chmod +x nginx.sh
                 ./nginx.sh
                 '''
             }
         }
-    }*/
+        */
+    }
 
     post {
         always {
@@ -58,5 +59,4 @@ pipeline {
             echo 'Pipeline failed.'
         }
     }
-}
 }
